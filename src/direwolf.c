@@ -99,6 +99,7 @@
 #include "server.h"
 #include "kiss.h"
 #include "kissnet.h"
+#include "axudp.h"
 #include "kissserial.h"
 #include "kiss_frame.h"
 #include "waypoint.h"
@@ -1329,6 +1330,7 @@ void app_process_rec_packet (int chan, int subchan, int slice, packet_t pp, alev
 	kissnet_send_rec_packet (chan, KISS_CMD_DATA_FRAME, fbuf, flen, -1);	// KISS TCP
 	kissserial_send_rec_packet (chan, KISS_CMD_DATA_FRAME, fbuf, flen, -1);	// KISS serial port
 	kisspt_send_rec_packet (chan, KISS_CMD_DATA_FRAME, fbuf, flen, -1);	// KISS pseudo terminal
+	axudp_send_rec_packet (chan, fbuf, flen, alevel, retries, spectrum);	// AXUDP v2 for dxlAPRS
 
 	if (A_opt_ais_to_obj && strlen(ais_obj_packet) != 0) {
 	  packet_t ao_pp = ax25_from_text (ais_obj_packet, 1);
